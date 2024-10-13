@@ -25,10 +25,10 @@ replace_rand_case <- function(string) {
   chars <- strsplit(string, "")
 
   low_ind <- which(grepl("[a-z]", chars[[1]]))
-  low_rand <- sample(letters, size = length(low_ind))
+  low_rand <- sample(letters, size = length(low_ind), replace = TRUE)
 
   upp_ind <- which(grepl("[A-Z]", chars[[1]]))
-  upp_rand <- sample(LETTERS, size = length(upp_ind))
+  upp_rand <- sample(LETTERS, size = length(upp_ind), replace = TRUE)
 
   chars[[1]][low_ind] <- low_rand
   chars[[1]][upp_ind] <- upp_rand
