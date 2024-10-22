@@ -23,10 +23,11 @@ Make all characters anonymous, ignoring numbers, dates, and numbers
 stored as characters.
 }
 \examples{
-xlsx_cells("data_raw/pcontas.xlsx") |>
+tidyxl::xlsx_cells("data_raw/pcontas.xlsx") |>
  anonymise(
    skip_rows = c(
      2:4, 12:14, 16, 89, 91, 229, 231, 233, 235:237, 252:254,
-     264:266, 389,391:400, 402:403, 405:406, 408:410))
+     264:266, 389,391:400, 402:403, 405:406, 408:410)) |>
+ unpivotr::rectify()
 
 }
