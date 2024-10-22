@@ -15,3 +15,6 @@ BugReports: https://github.com/diegomsg/tidycondr/issues
 Imports: 
     tidyxl,
     unpivotr
+Depends: 
+    R (>= 2.10)
+LazyData: true

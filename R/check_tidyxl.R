@@ -1,13 +1,15 @@
 #' Check a tidyxl tibble
 #'
-#' Check if it`s a simple [tidyxl::xlsx_cells()] with selectec cols.
+#' Check if it`s a simple [tidyxl::xlsx_cells()] with selected cols.
 #'
 #' @param tbl tibble
 #'
 #' @return logical
 #'
 check_tidyxl <- function(tbl) {
-  names(tbl) |>
-    identical(c("row", "col", "is_blank", "content", "data_type", "error",
-      "logical", "numeric", "date", "character"))
+  needed_cols <- c(
+    "row", "col", "is_blank", "content", "data_type", "error", "logical",
+    "numeric", "date", "character")
+
+  all(needed_cols %in% names(tbl))
 }

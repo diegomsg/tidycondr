@@ -13,5 +13,5 @@ check_tidyxl(tbl)
 logical
 }
 \description{
-Check if it`s a simple \code{\link[tidyxl:xlsx_cells]{tidyxl::xlsx_cells()}} with selectec cols.
+Check if it`s a simple \code{\link[tidyxl:xlsx_cells]{tidyxl::xlsx_cells()}} with selected cols.
 }
