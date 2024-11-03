@@ -25,6 +25,10 @@
 #' @importFrom tidyxl xlsx_cells
 #' @export
 #'
+#' @examples
+#' read_contas("data_raw/pcontas.xlsx")
+#' read_contas("data_raw/acordos.xlsx")
+
 read_contas <- function(contas_file) {
   xlsx_cells(contas_file)[c("row", "col", "is_blank", "content", "data_type",
     "error", "logical", "numeric", "date", "character")]
