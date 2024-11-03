@@ -6,6 +6,13 @@
 #'
 #' @return logical
 #'
+#' @examples
+#' pcontas <- read_contas("data_raw/pcontas.xlsx")
+#' check_tidyxl(pcontas)
+#'
+#' acordos <- read_contas("data_raw/acordos.xlsx")
+#' check_tidyxl(acordos)
+
 check_tidyxl <- function(tbl) {
   needed_cols <- c(
     "row", "col", "is_blank", "content", "data_type", "error", "logical",
