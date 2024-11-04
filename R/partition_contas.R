@@ -7,6 +7,10 @@
 #' @return A tibble with nested cols, 1 row per report
 #' @export
 #'
+#' @examples
+#' pcontas <- read_contas("ex/pcontas.xlsx")
+#' partition_contas(pcontas)
+#'
 partition_contas <- function(tbl) {
   stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
 

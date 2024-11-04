@@ -31,6 +31,10 @@ logical, numeric, date, character, blank.
 \item \code{character} The string value of a cell.
 }
 }
+\examples{
+read_contas("data_raw/pcontas.xlsx")
+read_contas("data_raw/acordos.xlsx")
+}
 \seealso{
 \code{\link[tidyxl:xlsx_cells]{tidyxl::xlsx_cells()}} which this function wraps.
 }
