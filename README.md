@@ -24,9 +24,49 @@ devtools::install_github("diegomsg/tidycondr")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example tidying up files from superlogica systems:
+
+### Load library
 
 ``` r
+# load lybrary
 library(tidycondr)
-## basic example code
+```
+
+### Load files contents with `{tidyxl}` wrapper function
+
+``` r
+## pcontas
+# read pcontas file
+read_contas("data_raw/pcontas.xlsx")
+
+## acordos
+# read acordos file
+read_contas("data_raw/acordos.xlsx")
+```
+
+### Partition subreports blocks
+
+``` r
+## pcontas
+# partition pcontas
+pcontas <- read_contas("data_raw/pcontas.xlsx")
+partition_contas(pcontas)
+
+## acordos
+# partition acordos
+acordos <- read_contas("data_raw/acordos.xlsx")
+```
+
+### Anonymize excel files
+
+Anonymize character contents, keeping values and selected rows (normaly headers) as is.
+
+```r
+tidyxl::xlsx_cells("data_raw/pcontas.xlsx") |>
+  anonymise(
+    skip_rows = c(
+      2:4, 12:14, 16, 89, 91, 229, 231, 233, 235:237, 252:254,
+      264:266, 389,391:400, 402:403, 405:406, 408:410)) |>
+  unpivotr::rectify()
 ```
