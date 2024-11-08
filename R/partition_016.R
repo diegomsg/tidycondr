@@ -1,4 +1,4 @@
-#' Process 016B Report Partition
+#' Process 016* Report Partition
 #'
 #' Process financial summary (Resumo financeiro).
 #'
@@ -10,14 +10,14 @@
 #' @examples
 #' pcontas <- read_contas("ex/pcontas.xlsx")
 #' pcontas_part <- partition_contas(pcontas)
-#' pcontas_part <- filter(pcontas_part, code == "016B")
+#' pcontas_part <- pcontas_part[grepl("016", parts$code),]
 #'
-#' partition_016b(pcontas_part[1,4][[1]][[1]])
+#' partition_016(pcontas_part[1,4][[1]][[1]])
 #'
 #' pcontas_part |>
-#'  mutate(processed = purrr::map(cells, partition_016b))
+#'  mutate(processed = purrr::map(cells, partition_016))
 #'
-partition_016b <- function(tbl) {
+partition_016 <- function(tbl) {
   stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
 
   tbl |>
