@@ -16,9 +16,9 @@ Original tibble with new column \code{processed_data}
 Process financial summary (Resumo financeiro).
 }
 \examples{
-pcontas <- read_contas("ex/pcontas.xlsx")
+pcontas <- read_contas("data_raw/pcontas.xlsx")
 pcontas_part <- partition_contas(pcontas)
-pcontas_part <- pcontas_part[grepl("016", parts$code),]
+pcontas_part <- pcontas_part[grepl("016", pcontas_part$code),]
 
 partition_016(pcontas_part[1,4][[1]][[1]])
 
