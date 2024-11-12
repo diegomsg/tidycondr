@@ -18,10 +18,14 @@ partition_contas <- function(tbl) {
   corners <- tbl[grepl(regpat, tbl$character),]
   data <- partition(tbl, corners)["cells"]
 
+  cols <- 2:12 # cols to $cells
+
   data$title <- sapply(data$cells, pull_title)
   data$subtitle <- sapply(data$cells, pull_subtitle)
   data$code <- sapply(data$cells, pull_code)
-  data$cells <- lapply(data$cells, \(x) {x[-c(1:2),]}) #drop rows 1:2
+  data$cells <- lapply(
+    data$cells,
+    \(x) {x[-c(1:2), cols]}) #drop rows 1:2
 
   data[c("code", "title", "subtitle", "cells")]
 }
