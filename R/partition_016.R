@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' pcontas <- read_contas("ex/pcontas.xlsx")
+#' pcontas <- read_contas("data_raw/pcontas.xlsx")
 #' pcontas_part <- partition_contas(pcontas)
 #' pcontas_part <- pcontas_part[grepl("016", parts$code),]
 #'
