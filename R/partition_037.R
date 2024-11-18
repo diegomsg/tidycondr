@@ -12,7 +12,7 @@
 #' @examples
 #' pcontas <- read_contas("data_raw/pcontas.xlsx")
 #' pcontas_part <- partition_contas(pcontas)
-#' pcontas_part <- pcontas_part[grepl("037", parts$code),]
+#' pcontas_part <- pcontas_part[grepl("037", pcontas_part$code),]
 #'
 #' partition_037(pcontas_part[1,4][[1]][[1]])
 #'
