@@ -34,17 +34,18 @@ partition_065 <- function(tbl) {
     behead("down", "total_row") |>
     behead("down", "subtotal_row") |>
     behead("left-up", "credito") |>
-    select(-c(total_row, subtotal_row, col)) |>
+    mutate(value = coalesce(character, as.character(numeric))) |>
+    select(-c(col:character, total_row, subtotal_row)) |>
     tidyr::pivot_wider(
       names_from = head,
-      values_from = character) |>
-    select(-c(row:date)) |>
+      values_from = value) |>
+    select(-c(row)) |>
     janitor::clean_names() |>
     filter(!is.na(codigo)) |>
     mutate(
       referencia = lubridate::my(info, locale = Sys.getlocale("LC_TIME")),
       compet = lubridate::my(compet),
-      across(c(total_qtd, codigo, pago:atraso_d), ~ readr::parse_number(
+      across(c(total_qtd, codigo, pago:creditado), ~ readr::parse_number(
         gsub("^\\(", "-", .x),
         locale = readr::locale(
           decimal_mark = ",",
