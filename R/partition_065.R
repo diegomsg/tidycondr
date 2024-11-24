@@ -42,7 +42,7 @@ partition_065 <- function(tbl) {
     janitor::clean_names() |>
     filter(!is.na(codigo)) |>
     mutate(
-      referencia = lubridate::my(info, locale = "pt"),
+      referencia = lubridate::my(info, locale = Sys.getlocale("LC_TIME")),
       compet = lubridate::my(compet),
       across(c(total_qtd, codigo, pago:atraso_d), ~ readr::parse_number(
         gsub("^\\(", "-", .x),
