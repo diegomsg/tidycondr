@@ -31,7 +31,25 @@ summ_tbl <- tbl |>
   relocate(info_txt, info, date, valor)
 
 # details rows
-# get receitass e despesass block
+# get receitass e despesas block
+head_values <- c("Receitas", "Competência", NA, "Valor")
+head_cols <- length(head_values)
+names(head_values) <- names(rec_tbl)[1:head_cols + 1]
+
+head_tbl <- t(head_values) |>
+  as_tibble()
+
+#from here
+
+inner_join(
+  rec_tbl)
+
+tbl[tbl$character == "Despesas",] |>
+  rectify()
+
+get_partition_corners_rows(
+  tbl, filled_cols = c(1:2, 4), empty_cols = 3)
+
 tbl |>
   rectify() |>
   View()
