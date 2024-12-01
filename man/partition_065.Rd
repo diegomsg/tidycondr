@@ -10,7 +10,7 @@ partition_065(tbl)
 \item{tbl}{A tidyxl tibble from \code{\link[=partition_contas]{partition_contas()}}}
 }
 \value{
-Original tibble with new column \code{processed_data}
+Tidy data.
 }
 \description{
 Process financial summary (Receitas liquidadas por data de crédito).

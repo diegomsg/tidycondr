@@ -4,7 +4,7 @@
 #'
 #' @param tbl A tidyxl tibble from [partition_contas()]
 #'
-#' @return Original tibble with new column `processed_data`
+#' @return Tidy data.
 #'
 #' @importFrom unpivotr behead_if
 #' @importFrom tidyr pivot_wider
