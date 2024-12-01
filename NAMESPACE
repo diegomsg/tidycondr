@@ -3,6 +3,7 @@
 export(anonymise)
 export(call_partition_funs)
 export(get_partition_fun)
+export(head_rows)
 export(is_numeric_like)
 export(partition_016)
 export(partition_037)
