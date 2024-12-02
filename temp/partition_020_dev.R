@@ -23,29 +23,31 @@ nested_info <- partition(tbl, partition_cells) |>
   select(info = character, cells)
 
 first_lvl_group_pat <- " \\([0-9]{1,3},?[0-9]*\\%\\)$"
-first_lvl_group_rows <-
+first_lvl_group_corners <-
   tbl[tbl$col == 1
-      & grepl(first_lvl_head_pat, tbl$character),]
+      & grepl(first_lvl_group_pat, tbl$character),]
 
 second_lvl_group_rows_id <- get_partition_corners_rows(tbl, 1, 2:6)
-second_lvl_group_rows <-
+second_lvl_group_corners <-
   tbl[tbl$col == 1
       & tbl$row %in% second_lvl_group_rows_id
       & !(tbl$row %in% first_lvl_group_rows$row),]
 
+# receitas resumo
+
 rec_resum <- nested_info$cells[1][[1]] |>
   behead("up", "head") |>
-  tidyr::replace_na(list(head = "prop_subgrupo")) |>
-  partition(first_lvl_group_rows) |>
+  tidyr::replace_na(list(head = "prop")) |>
+  partition(first_lvl_group_corners) |>
   select(grupo = character, cells) |>
   tidyr::unnest(cells) |>
-  filter(!(row %in% first_lvl_group_rows$row)) |>
-  partition(second_lvl_group_rows) |>
+  filter(!(row %in% first_lvl_group_corners$row)) |>
+  partition(second_lvl_group_corners) |>
   select(subgrupo = character, cells) |>
   tidyr::unnest(cells) |>
   filter(
-    !(row %in% first_lvl_group_rows$row)
-    & !(row %in% second_lvl_group_rows$row)) |>
+    !(row %in% first_lvl_group_corners$row)
+    & !(row %in% second_lvl_group_corners$row)) |>
   mutate(
     value = coalesce(
       character,
@@ -60,18 +62,42 @@ rec_resum <- nested_info$cells[1][[1]] |>
     grupo,
     c(
       grupo = ".*",
-      part_grupo = first_head_pat)) |>
+      prop_grupo = first_lvl_group_pat)) |>
   mutate(
-    part_grupo = parse_number(
-      part_grupo,
+    across(c(prop_grupo, prop, valor),
+    ~ parse_number(
+      .x,
       locale = locale(
         decimal_mark = ",",
-        grouping_mark = ".")),
+        grouping_mark = "."))),
     grupo_sum_row = receitas == paste0("Total de ", grupo),
-    subgrupo_sum_row = receitas == paste0("Total de ", subgrupo))
+    subgrupo_sum_row = receitas == paste0("Total de ", subgrupo)) |>
+  filter(!grupo_sum_row) |>
+  mutate(
+    prop_subgrupo = if_else(
+      subgrupo_sum_row,
+      prop,
+      NA)) |>
+  tidyr::fill(prop_subgrupo, .direction = "up") |>
+  filter(!subgrupo_sum_row) |>
+  relocate(
+    grupo, subgrupo, competencia, receitas, valor, prop, subgrupo_sum_row,
+    prop_subgrupo, grupo_sum_row, prop_grupo) |>
+  head(-1) |>
+  select(-c(subgrupo_sum_row, grupo_sum_row)) |>
+  mutate(
+    mes = if_else(
+      grepl("[0-9]{1,2}/[0-9]{2,4}", competencia),
+      my(competencia),
+      NA),
+    .after = competencia)
+
+# despesas
 
 # return
 tibble(
-  "chapter" = c("Resumo movimentação"),
-  "data" = list(partition_020_summary(tbl)))
+  "chapter" = c("Resumo movimentação", "Receitas resumo"),
+  "data" = list(
+    partition_020_summary(tbl),
+    rec_resum))
 
