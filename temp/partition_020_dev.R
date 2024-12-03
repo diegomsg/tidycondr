@@ -1,39 +1,55 @@
-pcontas <- read_contas("ex/pcontas.xlsx")
+pcontas <- read_contas("data_raw/pcontas.xlsx")
 pcontas_part <- partition_contas(pcontas)
 pcontas_part <- pcontas_part[grepl("020", pcontas_part$code),]
 
 tbl <- pcontas_part[1,4][[1]][[1]]
 
-rec_tbl <- rectify(tbl)
-
 # details rows
-# get receitass e despesas block
+# get receitas e despesas block
 
-## head row
-head_values <- list(
-  c("Receitas", "Competência", NA, "Valor"),
-  c("Despesas",	"Liquidação", "Documento",	"Forma de Pgto.",	NA,	"Valor"))
+tbl_groups <- partition_020_groups(tbl)
 
-head_rows <- head_rows(head_values, rec_tbl, verbose = FALSE)
+# receitas tbl
 
-# partition data
-partition_cells <- tbl[tbl$row %in% head_rows & tbl$col == 1L,]
+tbl_groups_receitas <- tbl_groups[tbl_groups$info == "Receitas",]$cells[[1]]
 
-nested_info <- partition(tbl, partition_cells) |>
-  select(info = character, cells)
+# receitas level groups
 
 first_lvl_group_pat <- " \\([0-9]{1,3},?[0-9]*\\%\\)$"
-first_lvl_group_corners <-
-  tbl[tbl$col == 1
-      & grepl(first_lvl_group_pat, tbl$character),]
+first_lvl_group_rows_id <- tbl_groups_receitas$row[
+  grepl(first_lvl_group_pat,
+        tbl_groups_receitas$character)]
+first_lvl_group_rows <- tibble(
+  "first_lvl_partition" = unpivotr::partition_dim(
+    tbl_groups_receitas$row,
+    first_lvl_group_rows_id,
+    bound = "upper"))
 
-second_lvl_group_rows_id <- get_partition_corners_rows(tbl, 1, 2:6)
-second_lvl_group_corners <-
-  tbl[tbl$col == 1
-      & tbl$row %in% second_lvl_group_rows_id
-      & !(tbl$row %in% first_lvl_group_rows$row),]
+second_lvl_group_rows_id <- get_partition_corners_rows(tbl_groups_receitas, 1, 2:4)
+second_lvl_group_rows <- tibble(
+  "second_lvl_partition" = unpivotr::partition_dim(
+    tbl_groups_receitas$row,
+    second_lvl_group_rows_id,
+    bound = "upper"))
+
 
 # receitas resumo
+
+bind_cols(
+  first_lvl_group_rows,
+  second_lvl_group_rows,
+  tbl_groups_receitas
+) |>
+ filter(
+   !if_all(
+     c(first_lvl_partition, second_lvl_partition),
+     is.na)) |>
+  behead("up", "head") |>
+  tidyr::replace_na(list(head = "prop"))
+
+### group by first_lvl and second_lvl
+### processs
+
 
 rec_resum <- nested_info$cells[1][[1]] |>
   behead("up", "head") |>
