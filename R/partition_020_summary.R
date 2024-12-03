@@ -7,8 +7,6 @@
 #'
 #' @return Tidy data.
 #'
-#' @export
-#'
 #' @examples
 #' pcontas <- read_contas("data_raw/pcontas.xlsx")
 #' pcontas_part <- partition_contas(pcontas)
