@@ -40,12 +40,22 @@ bind_cols(
   second_lvl_group_rows,
   tbl_groups_receitas
 ) |>
- filter(
+  behead("up", "head") |>
+  tidyr::replace_na(list(head = "prop")) |>
+  filter(
    !if_all(
      c(first_lvl_partition, second_lvl_partition),
      is.na)) |>
-  behead("up", "head") |>
-  tidyr::replace_na(list(head = "prop"))
+  group_by(first_lvl_partition, second_lvl_partition) |>
+  tidyr::nest() |>
+  mutate(
+    # first_lvl_group = purrr::map2_vec(
+    #   data, first_lvl_partition,
+    #   \(cells, row) cells[cells$row == row && cells$col == 1,]$character),
+    second_lvl_group = purrr::map2_vec(
+      data, second_lvl_partition,
+      \(cells, row_n) cells[cells$row == row_n,]$character))
+
 
 ### group by first_lvl and second_lvl
 ### processs
