@@ -21,4 +21,5 @@ check_tidyxl(pcontas)
 
 acordos <- read_contas("data_raw/acordos.xlsx")
 check_tidyxl(acordos)
+
 }

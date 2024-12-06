@@ -22,4 +22,5 @@ assert_tidyxl(pcontas)
 
 acordos <- read_contas("data_raw/acordos.xlsx")
 assert_tidyxl(acordos)
+
 }
