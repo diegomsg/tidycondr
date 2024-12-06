@@ -36,11 +36,11 @@ partition_020_groups <- function(tbl) {
       bound = "upper"))
 
   bind_cols(row_groups, tbl) |>
-    tidyr::nest(cells = -partition) |>
+    tidyr::nest(data = -partition) |>
     filter(!is.na(partition)) |>
     mutate(
       info = sapply(partition, info_cell, tbl = tbl)) |>
-    select(info, cells)
+    select(info, data)
 }
 
 info_cell <- function(row, tbl, col = 1L) {
