@@ -23,7 +23,7 @@
 #'
 anonymise <- function(tbl, skip_rows = NULL,
                       big_mark = ".", decimal_mark = ",") {
-  stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
+  assert_tidyxl(tbl)
 
   if(!missing(skip_rows)) {
     stopifnot("Must be integer vector of rows." = is.numeric(skip_rows))

@@ -20,7 +20,7 @@
 #'  mutate(processed = purrr::map(cells, partition_037))
 #'
 partition_037 <- function(tbl) {
-  stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
+  assert_tidyxl(tbl)
 
   start_row <- tbl$row[1]
   period_txt <- tbl$character[[1]]

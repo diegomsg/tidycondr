@@ -18,7 +18,7 @@
 #'  mutate(processed = purrr::map(cells, partition_016))
 #'
 partition_016 <- function(tbl) {
-  stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
+  assert_tidyxl(tbl)
 
   tbl |>
     behead("up-left", "period_txt") |>

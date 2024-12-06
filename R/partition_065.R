@@ -22,7 +22,7 @@
 #'  mutate(processed = purrr::map(cells, partition_065))
 #'
 partition_065 <- function(tbl) {
-  stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
+  assert_tidyxl(tbl)
 
   tbl |>
     behead("up-left", "info") |>

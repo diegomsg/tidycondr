@@ -18,7 +18,7 @@
 #'  mutate(processed = purrr::map(cells, partition_020_groups))
 #'
 partition_020_groups <- function(tbl) {
-  stopifnot(check_tidyxl(tbl))
+  assert_tidyxl(tbl)
 
   rec_tbl <- rectify(tbl)
 

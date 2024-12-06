@@ -12,7 +12,7 @@
 #' partition_contas(pcontas)
 #'
 partition_contas <- function(tbl) {
-  stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
+  assert_tidyxl(tbl)
 
   regpat <- "^[0-9]+[A-Z].*[\\(][0-9]+[\\)]"
   corners <- tbl[grepl(regpat, tbl$character),]

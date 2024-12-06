@@ -18,7 +18,7 @@
 #'  mutate(processed = purrr::map(cells, partition_020_summary))
 #'
 partition_020_summary <- function(tbl) {
-  stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
+  assert_tidyxl(tbl)
 
   summary_rows <- get_partition_corners_rows(
     tbl,

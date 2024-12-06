@@ -7,7 +7,7 @@
 #' @return numeric vector for rows
 #'
 get_partition_corners_rows <- function(tbl, filled_cols, empty_cols) {
-  stopifnot("Not a tidyxl tibble." = check_tidyxl(tbl))
+  assert_tidyxl(tbl)
   stopifnot(
     "`filled_cols` and `empty_cols` must be numeric vectors." =
     all(
