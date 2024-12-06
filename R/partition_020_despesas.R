@@ -1,8 +1,8 @@
-#' Process 020 Receitas Analítico Report Partition
+#' Process 020 Despesas Analítico Report Partition
 #'
-#' Process receitas partition of financial report
+#' Process despesass partition of financial report
 #'  (Demonstrativo de receitas e despesas analítico |>
-#'    receitas).
+#'    despesas).
 #'
 #' @param tbl A tidyxl tibble from [partition_contas()]
 #'
@@ -15,10 +15,10 @@
 #'
 #' tbl_groups <- partition_020_groups(tbl)
 #'
-#' partition_020_receitas(
-#'  tbl_groups[tbl_groups$info == "Receitas",]$data[[1]])
+#' partition_020_despesas(
+#'  tbl_groups[tbl_groups$info == "Despesas",]$data[[1]])
 #'
-partition_020_receitas <- function(tbl) {
+partition_020_despesas <- function(tbl) {
   assert_tidyxl(tbl)
 
   # receitas level groups
@@ -79,12 +79,14 @@ partition_020_receitas <- function(tbl) {
       values_from = value) |>
     select(-row) |>
     janitor::clean_names() |>
-    filter(!is.na(competencia)) |>
+    filter(!is.na(liquidacao)) |>
+    slice_head(n = -2) |>
     tidyr::separate_wider_regex(
       grupo,
       c(
         grupo = ".*",
         prop_grupo = first_lvl_group_pat)) |>
+    rename(liquidacao_txt = liquidacao) |>
     mutate(
       across(c(prop, valor),
              ~ gsub("\\(", "-", .x) |>
@@ -97,12 +99,12 @@ partition_020_receitas <- function(tbl) {
         locale = locale(
           decimal_mark = ",",
           grouping_mark = ".")),
-      mes = if_else(
-        grepl("[0-9]{1,2}/[0-9]{2,4}", competencia),
-        my(competencia, quiet = TRUE),
-        NA),
-      acordo = grepl("acordo", competencia, ignore.case = TRUE),
-      .after = competencia) |>
+      liquidacao_data = if_else(
+        grepl("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}", liquidacao_txt),
+        dmy(liquidacao_txt, quiet = TRUE),
+        my(liquidacao_txt, quiet = TRUE)),
+      liquidacao_mes = lubridate::floor_date(liquidacao_data, "month")) |>
     select(-c(first_lvl_partition, second_lvl_partition)) |>
-    relocate(valor, prop, prop_grupo, .after = last_col())
+    relocate(valor, prop, prop_grupo, .after = last_col()) |>
+    relocate(liquidacao_data, liquidacao_mes, .after = liquidacao_txt)
 }
