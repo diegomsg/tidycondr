@@ -18,7 +18,10 @@ get_partition_fun <- function(str) {
       any()
     ) {str}
   else {strtrim(str, 3)}
+
+  fun_code <- casefold(fun_code)
   fun_name <- paste0("partition_", fun_code)
+
   function(x) {
     do.call(fun_name, x)
   }
