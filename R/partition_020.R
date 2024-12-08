@@ -9,6 +9,9 @@
 #'
 #' @return Tidy data.
 #'
+#' @importFrom glue glue
+#' @export
+#'
 #' @examples
 #' pcontas <- read_contas("data_raw/pcontas.xlsx")
 #' pcontas_part <- partition_contas(pcontas)
@@ -28,9 +31,12 @@ partition_020 <- function(tbl) {
   analitico <- bind_cols(
     "chapter" = c("Relatório analítico"),
     "data" = partition_020_groups(tbl)) |>
-    filter(info == "Receitas") |>
-    mutate(
-      data = lapply(data, partition_020_receitas))
+    mutate(code = glue::glue("020_{info}")) |>
+    call_partition_funs(
+      .cells_col = data) |>
+    select(
+      chapter, info,
+      data = cells_parts)
 
   bind_rows(resumo, analitico) |>
     select(chapter, info, data)
