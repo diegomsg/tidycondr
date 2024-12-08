@@ -28,16 +28,20 @@ partition_020 <- function(tbl) {
     "data" = list(
       partition_020_summary(tbl)))
 
-  analitico <- bind_cols(
-    "chapter" = c("Relatório analítico"),
-    "data" = partition_020_groups(tbl)) |>
-    mutate(code = glue::glue("020_{info}")) |>
-    call_partition_funs(
-      .cells_col = data) |>
-    select(
-      chapter, info,
-      data = cells_parts)
+  groups <- partition_020_analit(tbl)
+
+  analitico <- if (is_empty(groups)) {
+    groups
+  } else {
+    groups |>
+      mutate(code = glue::glue("020_{info}")) |>
+      call_partition_funs(
+        .cells_col = data) |>
+      bind_cols(
+        "chapter" = c("Relatório analítico")) |>
+      select(chapter, info, data)
+  }
 
   bind_rows(resumo, analitico) |>
-    select(chapter, info, data)
+    relocate(data, .after = last_col())
 }

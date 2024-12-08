@@ -46,3 +46,16 @@ partition_020_groups <- function(tbl) {
 info_cell <- function(row, tbl, col = 1L) {
   tbl[tbl$row == row & tbl$col == col,]$character
 }
+
+partition_020_analit <- function(tbl) {
+  tidy_tbl <- try(
+    partition_020_groups(tbl),
+    silent = TRUE)
+
+  if (inherits(tidy_tbl, "try-error")) {
+    cli::cli_alert_warning("Unable to retrieve analitical info from partition.")
+    return(tibble())
+  }
+
+  return(tidy_tbl)
+}
