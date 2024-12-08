@@ -20,6 +20,11 @@ get_partition_corners_rows <- function(tbl, filled_cols, empty_cols) {
   filled_cols <- filled_cols + 1
   empty_cols <- empty_cols + 1
 
+  # limite cols intervals
+  max_cols <- 1:ncol(rec_tbl)
+  filled_cols <- intersect(filled_cols, max_cols)
+  empty_cols <- intersect(empty_cols, max_cols)
+
   condition_filled <- apply(!is.na(rec_tbl[filled_cols]), 1, all)
   condition_empty <- apply(is.na(rec_tbl[empty_cols]), 1, all)
 
