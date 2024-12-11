@@ -1,4 +1,4 @@
-#' Contas xlsx contents
+#' Contas xlsx Contents
 #'
 #' @description
 #' Read [tidyxl] data from `xlsx`file.
@@ -17,12 +17,11 @@
 #' * `date` The date value of a cell.
 #' * `character` The string value of a cell.
 #'
-#' @param contas_file
+#' @param contas_file xlsx filepath
 #'
 #' @return [tidyxl::xlsx_cells()] tibble with selected variables.
 #' @seealso [tidyxl::xlsx_cells()] which this function wraps.
 #'
-#' @importFrom tidyxl xlsx_cells
 #' @export
 #'
 #' @examples

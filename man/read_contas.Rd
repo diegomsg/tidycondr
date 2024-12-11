@@ -2,12 +2,12 @@
 % Please edit documentation in R/read_contas.R
 \name{read_contas}
 \alias{read_contas}
-\title{Contas xlsx contents}
+\title{Contas xlsx Contents}
 \usage{
 read_contas(contas_file)
 }
 \arguments{
-\item{contas_file}{}
+\item{contas_file}{xlsx filepath}
 }
 \value{
 \code{\link[tidyxl:xlsx_cells]{tidyxl::xlsx_cells()}} tibble with selected variables.
