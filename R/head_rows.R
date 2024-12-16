@@ -9,7 +9,7 @@ vec_to_tibl <- function(vec, names_from_tbl) {
   vec_names <- names(names_from_tbl)[1:length(vec) + 1]
   names(vec) <- vec_names
   t(vec) |>
-    as_tibble()
+    as_tibble(.name_repair = "check_unique")
 }
 
 #' Rows Indices for Sequence Cell Values
