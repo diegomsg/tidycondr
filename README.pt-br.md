@@ -56,6 +56,14 @@ partition_contas(pcontas)
 acordos <- read_contas("data_raw/acordos.xlsx")
 ```
 
+### Faça tudo de uma só vez
+
+``` r
+## pcontas
+# partition all pcontas
+read_contas_partitions("data_raw/pcontas.xlsx")
+```
+
 ### Anonimização - mascara dados
 
 Anonimiza conteúdo textual, mantendo dados numéricos, datas e linhas slecionadass (normalmente cabeçalhos) como estão.

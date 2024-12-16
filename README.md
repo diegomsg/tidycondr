@@ -58,6 +58,14 @@ partition_contas(pcontas)
 acordos <- read_contas("data_raw/acordos.xlsx")
 ```
 
+### Do it all at one step
+
+``` r
+## pcontas
+# partition all pcontas
+read_contas_partitions("data_raw/pcontas.xlsx")
+```
+
 ### Anonymize excel files
 
 Anonymize character contents, keeping values and selected rows (normaly headers) as is.
