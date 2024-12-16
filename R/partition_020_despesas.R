@@ -62,7 +62,10 @@ partition_020_despesas <- function(tbl) {
         get_group_row)) |>
     ungroup() |>
     tidyr::fill(grupo, subgrupo, .direction = "down") |>
-    filter(first_lvl_partition != second_lvl_partition) |>
+    filter(
+      first_lvl_partition != second_lvl_partition,
+      !is.na(first_lvl_partition),
+      !is.na(second_lvl_partition)) |>
     mutate(
       data = purrr::map2(
         data, second_lvl_partition,
