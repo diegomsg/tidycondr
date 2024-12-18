@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' pcontas <- read_contas("ex/pcontas.xlsx")
+#' pcontas <- read_contas("data_raw/pcontas.xlsx")
 #' partition_contas(pcontas)
 #'
 partition_contas <- function(tbl) {
