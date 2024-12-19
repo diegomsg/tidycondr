@@ -40,6 +40,7 @@ parcelas_lvl_group_rows <- tibble(
     parcelas_lvl_group_rows_id,
     bound = "upper"))
 
+# processing
 tidy_base <- bind_cols(
   first_lvl_group_rows,
   cobrancas_lvl_group_rows,
@@ -70,28 +71,38 @@ tidy_base <- bind_cols(
     id_cols = acordo_id,
     names_from = info,
     values_from = data) |>
-  janitor::clean_names()
-
-
-# return
-tidy_base |>
+  janitor::clean_names() |>
   mutate(
-    acordo_detail = lapply(acordo, partition_020_acordo_detail),
-    .keep = "unused") |>
+    acordo_detail = lapply(acordo, partition_028_acordo_detail),
+    .keep = "unused",
+    .after = acordo_id) |>
   tidyr::unnest(acordo_detail)
 
+# split code
 
-tbl_acordo <- tidy_base$acordo[1][[1]]
-partition_028_acordo_detail(tbl_acordo)
-tbl_acordo <- tbl_acordo |>
-  rectify() |>
-  select(-1) |>
-  tail(-2) |>
-  set_names(c("head", "info")) |>
+# cobrancas
+tidy_base$cobrancas_originais[1][[1]] |>
+  rectify()
+
+tidy_base$cobrancas_originais[1][[1]] |>
+  tail(-1) |>
+  behead("up", "head") |>
+  behead("right-down", "acrescimo") |>
+  mutate(total = last(acrescimo)) |>
+  head(-2) |>
+  #
+  # behead("right-down", "acrescimo") |>
+  # behead("left-down", "subtotal") |> View()
+  # mutate(valor = coalesce(numeric, date, character)) |>
   pivot_wider(
+    id_cols = row,
     names_from = head,
-    values_from = "info") |>
-  janitor::clean_names()
-
-names(tbl_acordo)[1] <- "unidade"
-
+    values_from = character
+  ) |>
+  janitor::clean_names() |>
+  mutate(subtotal = if_else(is.na(descricao), numero, NA)) |>
+  tidyr::fill(subtotal, .direction = "up") |>
+  filter(!is.na(descricao)) |>
+  tidyr::fill(numero:competencia)
+# change types
+#make function
