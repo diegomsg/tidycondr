@@ -7,6 +7,9 @@
 #'
 #' @return Tidy nested data.
 #'
+#' @importFrom unpivotr partition_dim
+#' @importFrom tidyr nest separate_wider_regex fill
+#' @importFrom janitor clean_names
 #' @export
 #'
 #' @examples
