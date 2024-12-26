@@ -1,82 +1,72 @@
 # dev acordos
 
 acord <- read_contas("data_raw/acordos.xlsx")
-pacord_part <- partition_contas(acord)
-pacord_part <- pacord_part[grepl("028", pacord_part$code),]
+pacord <- partition_contas(acord)
+pacord <- pacord[grepl("028", pacord$code),]
 
-tbl <- pacord_part$cells[1][[1]]
+pacord_part <- pacord$cells[1][[1]]
+
+tbl <- partition_028_split_groups(pacord_part)
 
 #-----------
 
-assert_tidyxl(tbl)
+cob <- tbl$cobrancas_originais[1][[1]]
+parc <- tbl$parcelas_do_acordo[1][[1]]
 
-first_lvl_group_pat <- "^Acordo [0-9]+$"
-first_lvl_group_rows_id <- tbl$row[
-  grepl(first_lvl_group_pat,
-        tbl$character)]
+# cobrancas
+partition_028_cobrancas(cob)
+tbl |>
+  mutate(
+    cobrancas_originais = lapply(cobrancas_originais, partition_028_cobrancas))
+
+# parcelas
+assert_tidyxl(cob)
+
+first_lvl_group_rows_id <- get_partition_corners_rows(cob, 1:5, 6)
 first_lvl_group_rows <- tibble(
-  "first_lvl_partition" = unpivotr::partition_dim(
-    tbl$row,
+  "first_lvl" = unpivotr::partition_dim(
+    cob$row,
     first_lvl_group_rows_id,
     bound = "upper"))
 
-cobrancas_lvl_group_pat <- "^Cobranças originais$"
-cobrancas_lvl_group_rows_id <- tbl$row[
-  grepl(cobrancas_lvl_group_pat,
-        tbl$character)]
-cobrancas_lvl_group_rows <- tibble(
-  "cobrancas_lvl_partition" = unpivotr::partition_dim(
-    tbl$row,
-    cobrancas_lvl_group_rows_id,
-    bound = "upper"))
-
-parcelas_lvl_group_pat <- "^Parcelas do acordo$"
-parcelas_lvl_group_rows_id <- tbl$row[
-  grepl(parcelas_lvl_group_pat,
-        tbl$character)]
-parcelas_lvl_group_rows <- tibble(
-  "parcelas_lvl_partition" = unpivotr::partition_dim(
-    tbl$row,
-    parcelas_lvl_group_rows_id,
-    bound = "upper"))
-
-# processing
-tidy_base <- bind_cols(
+bind_cols(
   first_lvl_group_rows,
-  cobrancas_lvl_group_rows,
-  parcelas_lvl_group_rows,
-  tbl
-) |> group_by(
-  first_lvl_partition,
-  cobrancas_lvl_partition,
-  parcelas_lvl_partition) |>
-  tidyr::nest() |>
-  ungroup() |>
+  cob) |>
   tail(-1) |>
-  select(first_lvl_partition, data) |>
-  mutate(
-    info = sapply(data, pull_title)
-  ) |>
-  tidyr::separate_wider_regex(
-    info,
-    c(
-      info = "[[:alpha:]|[:punct:]|\\s]*",
-      acordo_id = "[0-9]*"),
-    too_few = "align_start") |>
-  mutate(
-    info = trimws(info, "both"),
-    acordo_id = as.numeric(acordo_id)) |>
-  tidyr::fill(acordo_id) |>
+  behead("up", "head") |>
+  behead("right-down", "acrescimo") |>
+  mutate(total = last(acrescimo)) |>
+  head(-2) |>
+  group_by(first_lvl) |>
+  mutate(subtotal = last(character)) |>
+  filter(row < max(row)) |>
+  ungroup() |>
   pivot_wider(
-    id_cols = acordo_id,
-    names_from = info,
-    values_from = data) |>
+    id_cols = -c(col:date),
+    names_from = head,
+    values_from = character) |>
   janitor::clean_names() |>
+  relocate(c(subtotal, acrescimo, total), .after = last_col()) |>
   mutate(
-    acordo_detail = lapply(acordo, partition_028_acordo_detail),
-    .keep = "unused",
-    .after = acordo_id) |>
-  tidyr::unnest(acordo_detail)
+    numero = as.integer(numero),
+    across(
+      composicao:total,
+      ~ parse_number(
+        .x,
+        locale = locale(
+          decimal_mark = ",",
+          grouping_mark = "."))),
+    vencimento = dmy(vencimento),
+    competencia = my(competencia)) |>
+  select(-c(1:2)) |>
+  tidyr::fill(numero:competencia, .direction = "down") |>
+  mutate(
+    tx_atualizacao = total / (total - acrescimo),
+    across(
+      composicao:subtotal,
+      ~ .x * tx_atualizacao,
+      .names = "{.col}_atualizado"),
+    composicao_prop = composicao_atualizado / total)
 
 # split code
 
