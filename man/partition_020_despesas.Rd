@@ -13,7 +13,7 @@ partition_020_despesas(tbl)
 Tidy data.
 }
 \description{
-Process despesass partition of financial report
+Process despesas partition of financial report
 (Demonstrativo de receitas e despesas analítico |>
 despesas).
 }
