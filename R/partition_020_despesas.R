@@ -1,6 +1,6 @@
 #' Process 020 Despesas Analítico Report Partition
 #'
-#' Process despesass partition of financial report
+#' Process despesas partition of financial report
 #'  (Demonstrativo de receitas e despesas analítico |>
 #'    despesas).
 #'
