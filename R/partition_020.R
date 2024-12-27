@@ -2,8 +2,8 @@
 #'
 #' Process partitions of financial report:
 #'  - Resumo movimentação
-#'  - Demonstrativo de receitas e despesas analítico (em implementação)
-#'  - Demonstrativo analítico c fundo de caixa  (em implementação)
+#'  - Demonstrativo de receitas e despesas analítico
+#'  - Demonstrativo analítico c fundo de caixa
 #'
 #' @param tbl A tidyxl tibble from [partition_contas()]
 #'
