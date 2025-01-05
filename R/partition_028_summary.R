@@ -22,12 +22,12 @@ partition_028_summary <- function(tbl) {
   assert_tidyxl(tbl)
 
   datas <- tbl$character[1] |>
-    str_extract_all("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}") |>
+    stringi::stri_extract_all_regex("[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4}") |>
     unlist() |>
     strptime("%d/%m/%Y") |>
     as.Date()
 
-  tibble(
+  tibble::tibble(
     info_date = c("start_month", "end_month"),
     info_data = c("mes_inicio", "mes_fim"),
     date = datas)

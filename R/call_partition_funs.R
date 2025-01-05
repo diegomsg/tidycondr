@@ -5,7 +5,6 @@
 #' @param .cells_col cells column
 #' @param .progress progress bar, default `TRUE`
 #'
-#' @import rlang
 #' @return paritioned cells
 #' @export
 #'
@@ -20,12 +19,9 @@ call_partition_funs <- function(
     tbl, .code_col = code, .cells_col = cells, .progress = FALSE) {
   stopifnot(".progress must be logical." = is.logical(.progress))
 
-  mutate(
-    tbl,
-    cells_parts = purrr::map2(
+  tbl$cells_parts <- purrr::map2(
       .x = {{ .code_col }},
       .y = {{ .cells_col }},
       .f = ~ get_partition_fun(.x)(list(.y)),
       .progress = .progress)
-  )
 }

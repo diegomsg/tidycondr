@@ -9,7 +9,7 @@ vec_to_tibl <- function(vec, names_from_tbl) {
   vec_names <- names(names_from_tbl)[1:length(vec) + 1]
   names(vec) <- vec_names
   t(vec) |>
-    as_tibble(.name_repair = "check_unique")
+    tibble::as_tibble(.name_repair = "check_unique")
 }
 
 #' Rows Indices for Sequence Cell Values
@@ -22,9 +22,9 @@ vec_to_tibl <- function(vec, names_from_tbl) {
 head_rows_base <- function(head_values, tbl_to_extract_rows) {
   head_values |>
     lapply(vec_to_tibl, tbl_to_extract_rows) |>
-    bind_rows() |>
-    inner_join(tbl_to_extract_rows) |>
-    pull(last_col())
+    rbind() |>
+    dplyr::inner_join(tbl_to_extract_rows) |>
+    dplyr::pull(dplyr::last_col())
 }
 
 #' Rows Indices for Sequence Cell Values

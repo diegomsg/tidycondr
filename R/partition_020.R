@@ -9,7 +9,6 @@
 #'
 #' @return Tidy data.
 #'
-#' @importFrom glue glue
 #' @export
 #'
 #' @examples
@@ -23,25 +22,25 @@
 #'  mutate(processed = purrr::map(cells, partition_020))
 #'
 partition_020 <- function(tbl) {
-  resumo <- tibble(
+  resumo <- tibble::tibble(
     "chapter" = c("Resumo movimentação"),
     "data" = list(
       partition_020_summary(tbl)))
 
   groups <- partition_020_analit(tbl)
 
-  analitico <- if (is_empty(groups)) {
+  analitico <- if (rlang::is_empty(groups)) {
     groups
   } else {
     groups |>
-      mutate(code = glue::glue("020_{info}")) |>
+      dplyr::mutate(code = glue::glue("020_{info}")) |>
       call_partition_funs(
         .cells_col = data) |>
-      bind_cols(
+      cbind(
         "chapter" = c("Relatório analítico")) |>
-      select(chapter, info, data)
+      dplyr::select(chapter, info, data)
   }
 
-  bind_rows(resumo, analitico) |>
-    relocate(data, .after = last_col())
+  rbind(resumo, analitico) |>
+    dplyr::relocate(data, .after = dplyr::last_col())
 }

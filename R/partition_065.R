@@ -6,8 +6,6 @@
 #'
 #' @return Tidy data.
 #'
-#' @importFrom unpivotr behead_if
-#' @importFrom tidyr pivot_wider
 #'
 #' @export
 #'
@@ -25,32 +23,32 @@ partition_065 <- function(tbl) {
   assert_tidyxl(tbl)
 
   tbl |>
-    behead("up-left", "info") |>
-    behead("up", "head") |>
+    unpivotr::behead("up-left", "info") |>
+    unpivotr::behead("up", "head") |>
     unpivotr::behead_if(
       grepl("Cobranças", character),
       direction = "left-down",
       name = "total_qtd") |>
-    behead("down", "total_row") |>
-    behead("down", "subtotal_row") |>
-    behead("left-up", "credito") |>
-    mutate(value = coalesce(character, as.character(numeric))) |>
-    select(-c(col:character, total_row, subtotal_row)) |>
+    unpivotr::behead("down", "total_row") |>
+    unpivotr::behead("down", "subtotal_row") |>
+    unpivotr::behead("left-up", "credito") |>
+    dplyr::mutate(value = dplyr::coalesce(character, as.character(numeric))) |>
+    dplyr::select(-c(col:character, total_row, subtotal_row)) |>
     tidyr::pivot_wider(
       names_from = head,
       values_from = value) |>
-    select(-c(row)) |>
+    dplyr::select(-c(row)) |>
     janitor::clean_names() |>
-    filter(!is.na(codigo)) |>
-    mutate(
+    dplyr::filter(!is.na(codigo)) |>
+    dplyr::mutate(
       referencia = lubridate::my(info, locale = Sys.getlocale("LC_TIME")),
       compet = lubridate::my(compet),
-      across(c(total_qtd, codigo, pago:creditado), ~ readr::parse_number(
+      dplyr::across(c(total_qtd, codigo, pago:creditado), ~ readr::parse_number(
         gsub("^\\(", "-", .x),
         locale = readr::locale(
           decimal_mark = ",",
           grouping_mark = "."))),
-      across(c(credito, venc, liquidacao), lubridate::dmy)) |>
-    select(referencia, compet, codigo, credito, unidade, liquidacao, venc,
-           atraso_d, pago, tarifa, creditado)
+      dplyr::across(c(credito, venc, liquidacao), lubridate::dmy)) |>
+    dplyr::select(referencia, compet, codigo, credito, unidade, liquidacao,
+                  venc, atraso_d, pago, tarifa, creditado)
 }

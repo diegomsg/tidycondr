@@ -16,7 +16,7 @@ partition_contas <- function(tbl) {
 
   regpat <- "^[0-9]+[A-Z].*[\\(][0-9]+[\\)]"
   corners <- tbl[grepl(regpat, tbl$character),]
-  data <- partition(tbl, corners)["cells"]
+  data <- unpivotr::partition(tbl, corners)["cells"]
 
   data$title <- sapply(data$cells, pull_title)
   data$subtitle <- sapply(data$cells, pull_subtitle)

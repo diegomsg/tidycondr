@@ -9,7 +9,7 @@ read_contas_partitions(contas_file, .progress = TRUE)
 \arguments{
 \item{contas_file}{xlsx filepath}
 
-\item{.progress}{show {purrr} progress bar?}
+\item{.progress}{show \link{purrr} progress bar?}
 }
 \value{
 tidy partitions.

@@ -7,11 +7,11 @@
 #'
 partition_028_acordo_detail <- function(tbl_acordo) {
   tbl_acordo <- tbl_acordo |>
-    rectify() |>
-    select(-1) |>
+    unpivotr::rectify() |>
+    dplyr::select(-1) |>
     tail(-2) |>
-    set_names(c("head", "info")) |>
-    pivot_wider(
+    rlang::set_names(c("head", "info")) |>
+    tidyr::pivot_wider(
       names_from = head,
       values_from = "info") |>
     janitor::clean_names()

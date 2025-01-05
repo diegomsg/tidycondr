@@ -4,7 +4,7 @@
 #' @param string Atomic string vector
 #'
 #' @return Atomic string vector
-#' @importFrom stringr str_flatten
+#'
 #' @export
 #'
 #' @examples

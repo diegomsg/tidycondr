@@ -10,16 +10,17 @@
 #'
 #' @return tidyxl tibble
 #' @export
-#' @importFrom tidyxl xlsx_cells
-#' @importFrom unpivotr rectify
 #'
 #' @examples
-#' tidyxl::xlsx_cells("data_raw/pcontas.xlsx") |>
+#' \dontrun{
+#' system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+#' tidyxl::xlsx_cells() |>
 #'  anonymise(
 #'    skip_rows = c(
 #'      2:4, 12:14, 16, 89, 91, 229, 231, 233, 235:237, 252:254,
 #'      264:266, 389,391:400, 402:403, 405:406, 408:410)) |>
 #'  unpivotr::rectify()
+#'  }
 #'
 anonymise <- function(tbl, skip_rows = NULL,
                       big_mark = ".", decimal_mark = ",") {

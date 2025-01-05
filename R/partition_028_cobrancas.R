@@ -6,9 +6,7 @@
 #'
 #' @return Tidy data.
 #'
-#' @importFrom tidyr fill
-#' @importFrom janitor clean_names
-#' @importFrom unpivotr partition_dim
+#' @import dplyr
 #' @export
 #'
 #' @examples
@@ -24,25 +22,25 @@ partition_028_cobrancas <- function(cob) {
   assert_tidyxl(cob)
 
   first_lvl_group_rows_id <- get_partition_corners_rows(cob, 1:5, 6)
-  first_lvl_group_rows <- tibble(
+  first_lvl_group_rows <- tibble::tibble(
     "first_lvl" = unpivotr::partition_dim(
       cob$row,
       first_lvl_group_rows_id,
       bound = "upper"))
 
-  bind_cols(
+  cbind(
     first_lvl_group_rows,
     cob) |>
     tail(-1) |>
-    behead("up", "head") |>
-    behead("right-down", "acrescimo") |>
-    mutate(total = last(acrescimo)) |>
+    unpivotr::behead("up", "head") |>
+    unpivotr::behead("right-down", "acrescimo") |>
+    dplyr::mutate(total = last(acrescimo)) |>
     head(-2) |>
-    group_by(first_lvl) |>
+    dplyr::group_by(first_lvl) |>
     mutate(subtotal = last(character)) |>
     filter(row < max(row)) |>
     ungroup() |>
-    pivot_wider(
+    tidyr::pivot_wider(
       id_cols = -c(col:date),
       names_from = head,
       values_from = character) |>
@@ -52,13 +50,13 @@ partition_028_cobrancas <- function(cob) {
       numero = as.integer(numero),
       across(
         composicao:total,
-        ~ parse_number(
+        ~ readr::parse_number(
           .x,
-          locale = locale(
+          locale = readr::locale(
             decimal_mark = ",",
             grouping_mark = "."))),
-      vencimento = dmy(vencimento),
-      competencia = my(competencia)) |>
+      vencimento = lubridate::dmy(vencimento),
+      competencia = lubridate::my(competencia)) |>
     select(-c(1:2)) |>
     tidyr::fill(numero:competencia, .direction = "down") |>
     mutate(

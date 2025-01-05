@@ -5,7 +5,7 @@
 #'  partition_*() for each report code.
 #'
 #' @param contas_file xlsx filepath
-#' @param .progress show {purrr} progress bar?
+#' @param .progress show [purrr] progress bar?
 #'
 #' @return tidy partitions.
 #'
@@ -23,5 +23,5 @@ read_contas_partitions <- function(contas_file, .progress = TRUE) {
       .cells_col = cells,
       .progress = .progress
     ) |>
-    select(-cells)
+    dplyr::select(-cells)
 }

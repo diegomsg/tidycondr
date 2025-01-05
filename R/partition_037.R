@@ -5,8 +5,7 @@
 #' @param tbl A tidyxl tibble from [partition_contas()]
 #'
 #' @return Original tibble with new column `processed_data`
-#' @importFrom janitor clean_names
-#' @importFrom tidyr separate_wider_delim
+#'
 #' @export
 #'
 #' @examples
@@ -28,10 +27,10 @@ partition_037 <- function(tbl) {
     tail(3)
 
   tbl |>
-    filter(row > start_row + 1) |>
-    rectify() |>
-    select(-1) |>
-    set_names(head) |>
+    dplyr::filter(row > start_row + 1) |>
+    unpivotr::rectify() |>
+    dplyr::select(-1) |>
+    rlang::set_names(head) |>
     janitor::clean_names() |>
     tidyr::separate_wider_delim(
       lancamento,
@@ -40,8 +39,8 @@ partition_037 <- function(tbl) {
       too_few = "align_end",
       too_many = "merge",
       cols_remove = FALSE) |>
-    mutate(
-      across(
+    dplyr::mutate(
+      dplyr::across(
         c(valor, percent),
         ~ readr::parse_number(
           gsub("^\\(", "-", .x),

@@ -7,9 +7,6 @@
 #'
 #' @return Tidy nested data.
 #'
-#' @importFrom unpivotr partition_dim
-#' @importFrom tidyr nest separate_wider_regex fill
-#' @importFrom janitor clean_names
 #' @export
 #'
 #' @examples
@@ -30,7 +27,7 @@ partition_028_split_groups <- function(tbl) {
   first_lvl_group_rows_id <- tbl$row[
     grepl(first_lvl_group_pat,
           tbl$character)]
-  first_lvl_group_rows <- tibble(
+  first_lvl_group_rows <- tibble::tibble(
     "first_lvl_partition" = unpivotr::partition_dim(
       tbl$row,
       first_lvl_group_rows_id,
@@ -40,7 +37,7 @@ partition_028_split_groups <- function(tbl) {
   cobrancas_lvl_group_rows_id <- tbl$row[
     grepl(cobrancas_lvl_group_pat,
           tbl$character)]
-  cobrancas_lvl_group_rows <- tibble(
+  cobrancas_lvl_group_rows <- tibble::tibble(
     "cobrancas_lvl_partition" = unpivotr::partition_dim(
       tbl$row,
       cobrancas_lvl_group_rows_id,
@@ -50,27 +47,27 @@ partition_028_split_groups <- function(tbl) {
   parcelas_lvl_group_rows_id <- tbl$row[
     grepl(parcelas_lvl_group_pat,
           tbl$character)]
-  parcelas_lvl_group_rows <- tibble(
+  parcelas_lvl_group_rows <- tibble::tibble(
     "parcelas_lvl_partition" = unpivotr::partition_dim(
       tbl$row,
       parcelas_lvl_group_rows_id,
       bound = "upper"))
 
   # processing
-  tidy_base <- bind_cols(
+  tidy_base <- cbind(
     first_lvl_group_rows,
     cobrancas_lvl_group_rows,
     parcelas_lvl_group_rows,
     tbl
-  ) |> group_by(
+  ) |> dplyr::group_by(
     first_lvl_partition,
     cobrancas_lvl_partition,
     parcelas_lvl_partition) |>
     tidyr::nest() |>
-    ungroup() |>
+    dplyr::ungroup() |>
     tail(-1) |>
-    select(first_lvl_partition, data) |>
-    mutate(
+    dplyr::select(first_lvl_partition, data) |>
+    dplyr::mutate(
       info = sapply(data, pull_title)
     ) |>
     tidyr::separate_wider_regex(
@@ -79,17 +76,17 @@ partition_028_split_groups <- function(tbl) {
         info = "[[:alpha:]|[:punct:]|\\s]*",
         acordo_id = "[0-9]*"),
       too_few = "align_start") |>
-    mutate(
+    dplyr::mutate(
       info = trimws(info, "both"),
       acordo_id = as.numeric(acordo_id)) |>
     tidyr::fill(acordo_id) |>
     # pivot info to collumns
-    pivot_wider(
+    tidyr::pivot_wider(
       id_cols = acordo_id,
       names_from = info,
       values_from = data) |>
     janitor::clean_names() |>
-    mutate(
+    dplyr::mutate(
       acordo_detail = lapply(acordo, partition_028_acordo_detail),
       .keep = "unused",
       .after = acordo_id) |>

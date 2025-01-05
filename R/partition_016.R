@@ -21,11 +21,11 @@ partition_016 <- function(tbl) {
   assert_tidyxl(tbl)
 
   tbl |>
-    behead("up-left", "period_txt") |>
-    behead("up", "info") |>
-    behead("left", "conta") |>
-    select(period_txt, conta, info, valor = character) |>
-    mutate(
+    unpivotr::behead("up-left", "period_txt") |>
+    unpivotr::behead("up", "info") |>
+    unpivotr::behead("left", "conta") |>
+    dplyr::select(period_txt, conta, info, valor = character) |>
+    dplyr::mutate(
       valor = readr::parse_number(
         gsub("^\\(", "-", valor),
         locale = readr::locale(
@@ -41,5 +41,5 @@ partition_016 <- function(tbl) {
         (period_txt,
           "(\\d{2}/\\d{2}/\\d{4}).*(\\d{2}/\\d{2}/\\d{4})",
           group = 2))) |>
-    relocate(period_txt, period_start, period_end)
+    dplyr::relocate(period_txt, period_start, period_end)
 }

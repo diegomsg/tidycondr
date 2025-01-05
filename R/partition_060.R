@@ -6,10 +6,6 @@
 #'
 #' @return Tidy nested data.
 #'
-#' @importFrom tibble as_tibble_col
-#' @importFrom tidyr separate_wider_delim
-#' @importFrom janitor clean_names
-#'
 #' @export
 #'
 #' @examples
@@ -35,13 +31,13 @@ partition_060 <- function(tbl) {
 
 partition_060_short <- function(tbl) {
   datas <- tbl$character |>
-    str_extract_all("[a-z|A-Z]+/[0-9]{2,4}") |>
+    stringi::stri_extract_all_regex("[a-z|A-Z]+/[0-9]{2,4}") |>
     unlist() |>
     paste0("1/", ... = _) |>
     strptime("%d/%B/%Y") |>
     as.Date()
 
-  tibble(
+  tibble::tibble(
     info_date = c("start_month", "end_month"),
     info_data = c("mes_inicio", "mes_fim"),
     date = datas)
@@ -49,7 +45,7 @@ partition_060_short <- function(tbl) {
 
 partition_060_long <- function(tbl) {
   datas <- tbl$character[1] |>
-    str_extract_all("[a-z|A-Z]+/[0-9]{2,4}") |>
+    stringi::stri_extract_all_regex("[a-z|A-Z]+/[0-9]{2,4}") |>
     unlist() |>
     paste0("1/", ... = _) |>
     strptime("%d/%B/%Y") |>
@@ -62,24 +58,24 @@ partition_060_long <- function(tbl) {
       cols = txt,
       delim = ": ",
       names = c("param", "valor")) |>
-    mutate(
+    dplyr::mutate(
       param = sub("^Valores atualizados em$", "Atualização", param))
 
   params_tidy <- params_txt |>
-    pivot_wider(
+    tidyr::pivot_wider(
       names_from = param,
       values_from = valor) |>
     janitor::clean_names() |>
-    mutate(
+    dplyr::mutate(
       atualizacao = dmy(atualizacao),
-      across(
+      dplyr::across(
         -atualizacao,
-        ~ parse_number(
+        ~ readr::parse_number(
           .x,
-          locale = locale(
+          locale = readr::locale(
             decimal_mark = ".",
             grouping_mark = " ")) / 100)) |>
-    rename_with(
+    dplyr::rename_with(
       .cols = -atualizacao,
       ~ paste0(.x, "_am"))
 

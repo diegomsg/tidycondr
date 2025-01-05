@@ -16,8 +16,8 @@ Tidy data.
 Process partitions of financial report:
 \itemize{
 \item Resumo movimentação
-\item Demonstrativo de receitas e despesas analítico (em implementação)
-\item Demonstrativo analítico c fundo de caixa  (em implementação)
+\item Demonstrativo de receitas e despesas analítico
+\item Demonstrativo analítico c fundo de caixa
 }
 }
 \examples{

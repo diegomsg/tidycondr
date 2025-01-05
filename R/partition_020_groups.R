@@ -20,7 +20,7 @@
 partition_020_groups <- function(tbl) {
   assert_tidyxl(tbl)
 
-  rec_tbl <- rectify(tbl)
+  rec_tbl <- unpivotr::rectify(tbl)
 
   ## head row
   head_values <- list(
@@ -29,18 +29,18 @@ partition_020_groups <- function(tbl) {
 
   head_rows <- head_rows(head_values, rec_tbl, verbose = FALSE)
 
-  row_groups <- tibble(
+  row_groups <- tibble::tibble(
     "partition" = unpivotr::partition_dim(
       tbl$row,
       head_rows,
       bound = "upper"))
 
-  bind_cols(row_groups, tbl) |>
+  cbind(row_groups, tbl) |>
     tidyr::nest(data = -partition) |>
-    filter(!is.na(partition)) |>
-    mutate(
+    dplyr::filter(!is.na(partition)) |>
+    dplyr::mutate(
       info = sapply(partition, info_cell, tbl = tbl)) |>
-    select(info, data)
+    dplyr::select(info, data)
 }
 
 info_cell <- function(row, tbl, col = 1L) {
@@ -54,8 +54,8 @@ partition_020_analit <- function(tbl) {
 
   if (inherits(tidy_tbl, "try-error")) {
     cli::cli_alert_warning("Unable to retrieve analitical info from partition.")
-    return(tibble())
+    tibble::tibble()
+  }  else {
+    return(tidy_tbl)
   }
-
-  return(tidy_tbl)
 }

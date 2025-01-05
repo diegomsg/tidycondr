@@ -6,11 +6,7 @@
 #'
 #' @return Tidy data.
 #'
-#' @importFrom janitor row_to_names clean_names
-#' @importFrom unpivotr partition_dim
-#' @importFrom stringi stri_extract_first stri_extract_last
-#' @importFrom lubridate dmy
-#' @importFrom readr parse_number locale
+#' @import dplyr
 #' @export
 #'
 #' @examples
@@ -26,7 +22,7 @@ partition_028_parcelas <- function(parc) {
   assert_tidyxl(parc)
 
   parc |>
-    rectify() |>
+    unpivotr::rectify() |>
     select(-1) |>
     janitor::row_to_names(2, remove_rows_above = TRUE) |>
     janitor::clean_names() |>
@@ -49,7 +45,7 @@ partition_028_parcelas <- function(parc) {
         c(numero, obs_id:obs_n),
         as.integer),
       across(
-        starts_with("emitido")|starts_with("pago"),
+        starts_with("emitido") | starts_with("pago"),
         parse_number,
         locale = readr::locale(
           decimal_mark = ",",

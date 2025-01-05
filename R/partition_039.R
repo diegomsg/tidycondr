@@ -6,9 +6,6 @@
 #'
 #' @return Tidy data.
 #'
-#' @importFrom unpivotr behead_if
-#' @importFrom tidyr pivot_wider
-#'
 #' @export
 #'
 #' @examples
