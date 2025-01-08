@@ -32,11 +32,13 @@ partition_028_cobrancas <- function(cob) {
     first_lvl_group_rows,
     cob) |>
     tail(-1) |>
+    mutate(character = coalesce(character, as.character(numeric))) |>
     unpivotr::behead("up", "head") |>
     unpivotr::behead("right-down", "acrescimo") |>
-    dplyr::mutate(total = last(acrescimo)) |>
+    mutate(total = last(acrescimo, na_rm = TRUE)) |>
+    filter(!is_blank) |>
     head(-2) |>
-    dplyr::group_by(first_lvl) |>
+    group_by(first_lvl) |>
     mutate(subtotal = last(character)) |>
     filter(row < max(row)) |>
     ungroup() |>
