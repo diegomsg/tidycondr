@@ -32,8 +32,11 @@ logical, numeric, date, character, blank.
 }
 }
 \examples{
-read_contas("data_raw/pcontas.xlsx")
-read_contas("data_raw/acordos.xlsx")
+system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+ read_contas()
+
+system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+ read_contas()
 }
 \seealso{
 \code{\link[tidyxl:xlsx_cells]{tidyxl::xlsx_cells()}} which this function wraps.

@@ -9,11 +9,12 @@
 #' @export
 #'
 #' @examples
-#' parts <- read_contas("data_raw/pcontas.xlsx") |>
-#'   partition_contas()
+#' parts <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+#'  read_contas() |>
+#'  partition_contas()
 #'
 #' parts[grepl("016", parts$code),] |>
-#'   call_partition_funs(.code_col = code, .cells_col = cells)
+#'  call_partition_funs(.code_col = code, .cells_col = cells)
 #'
 call_partition_funs <- function(
     tbl, .code_col = code, .cells_col = cells, .progress = FALSE) {

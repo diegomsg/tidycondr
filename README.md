@@ -38,11 +38,13 @@ library(tidycondr)
 ``` r
 ## pcontas
 # read pcontas file
-read_contas("data_raw/pcontas.xlsx")
+system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+  read_contas()
 
 ## acordos
 # read acordos file
-read_contas("data_raw/acordos.xlsx")
+system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+  read_contas()
 ```
 
 ### Partition subreports blocks
@@ -50,12 +52,14 @@ read_contas("data_raw/acordos.xlsx")
 ``` r
 ## pcontas
 # partition pcontas
-pcontas <- read_contas("data_raw/pcontas.xlsx")
+pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+  read_contas()
 partition_contas(pcontas)
 
 ## acordos
 # partition acordos
-acordos <- read_contas("data_raw/acordos.xlsx")
+acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+  read_contas()
 ```
 
 ### Do it all at one step
@@ -63,7 +67,8 @@ acordos <- read_contas("data_raw/acordos.xlsx")
 ``` r
 ## pcontas
 # partition all pcontas
-read_contas_partitions("data_raw/pcontas.xlsx")
+system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+  read_contas_partitions()
 ```
 
 ### Anonymize excel files
@@ -71,7 +76,8 @@ read_contas_partitions("data_raw/pcontas.xlsx")
 Anonymize character contents, keeping values and selected rows (normaly headers) as is.
 
 ```r
-tidyxl::xlsx_cells("data_raw/pcontas.xlsx") |>
+system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+  tidyxl::xlsx_cells() |>
   anonymise(
     skip_rows = c(
       2:4, 12:14, 16, 89, 91, 229, 231, 233, 235:237, 252:254,

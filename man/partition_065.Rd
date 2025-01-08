@@ -16,7 +16,8 @@ Tidy data.
 Process financial summary (Receitas liquidadas por data de crédito).
 }
 \examples{
-pcontas <- read_contas("data_raw/pcontas.xlsx")
+pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+ read_contas()
 pcontas_part <- partition_contas(pcontas)
 pcontas_part <- pcontas_part[grepl("065", pcontas_part$code),]
 

@@ -16,8 +16,9 @@ function as \verb{partition_*} replacing *
 Get Partition Function from String
 }
 \examples{
-parts <- read_contas("data_raw/pcontas.xlsx") |>
-  partition_contas()
+parts <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |.
+ read_contas() |>
+ partition_contas()
 
 partition_function("016B")(list(parts[1, 4][[1]][[1]]))
 

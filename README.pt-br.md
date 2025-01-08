@@ -36,11 +36,13 @@ library(tidycondr)
 ``` r
 ## pcontas
 # lê arquivo pcontas
-read_contas("data_raw/pcontas.xlsx")
+pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+   read_contas()
 
 ## acordos
 # lê arquivo acordos
-read_contas("data_raw/acordos.xlsx")
+acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+  read_contas()
 ```
 
 ### Subdivide em blocos de subrelatórios
@@ -48,12 +50,14 @@ read_contas("data_raw/acordos.xlsx")
 ``` r
 ## pcontas
 # partition pcontas
-pcontas <- read_contas("data_raw/pcontas.xlsx")
+pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+ read_contas()
 partition_contas(pcontas)
 
 ## acordos
 # partition acordos
-acordos <- read_contas("data_raw/acordos.xlsx")
+acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+ read_contas()
 ```
 
 ### Faça tudo de uma só vez
@@ -61,7 +65,8 @@ acordos <- read_contas("data_raw/acordos.xlsx")
 ``` r
 ## pcontas
 # partition all pcontas
-read_contas_partitions("data_raw/pcontas.xlsx")
+system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+ read_contas_partitions()
 ```
 
 ### Anonimização - mascara dados
@@ -69,7 +74,8 @@ read_contas_partitions("data_raw/pcontas.xlsx")
 Anonimiza conteúdo textual, mantendo dados numéricos, datas e linhas slecionadass (normalmente cabeçalhos) como estão.
 
 ```r
-tidyxl::xlsx_cells("data_raw/pcontas.xlsx") |>
+system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+  tidyxl::xlsx_cells() |>
   anonymise(
     skip_rows = c(
       2:4, 12:14, 16, 89, 91, 229, 231, 233, 235:237, 252:254,

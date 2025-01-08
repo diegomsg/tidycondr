@@ -16,7 +16,8 @@ A tibble with nested cols, 1 row per report
 Get \code{\link[unpivotr:partition]{unpivotr::partition()}} for each report in \code{\link[=read_contas]{read_contas()}} tibble.
 }
 \examples{
-pcontas <- read_contas("data_raw/pcontas.xlsx")
+pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+ read_contas()
 partition_contas(pcontas)
 
 }

@@ -18,7 +18,8 @@ Process despesas partition of financial report
 despesas).
 }
 \examples{
-pcontas <- read_contas("data_raw/pcontas.xlsx")
+pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+ read_contas()
 pcontas_part <- partition_contas(pcontas)
 pcontas_part <- pcontas_part[grepl("020", pcontas_part$code),]
 

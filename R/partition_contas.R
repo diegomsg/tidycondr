@@ -8,7 +8,8 @@
 #' @export
 #'
 #' @examples
-#' pcontas <- read_contas("data_raw/pcontas.xlsx")
+#' pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+#'  read_contas()
 #' partition_contas(pcontas)
 #'
 partition_contas <- function(tbl) {

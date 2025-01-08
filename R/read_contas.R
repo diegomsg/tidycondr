@@ -25,8 +25,11 @@
 #' @export
 #'
 #' @examples
-#' read_contas("data_raw/pcontas.xlsx")
-#' read_contas("data_raw/acordos.xlsx")
+#' system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+#'  read_contas()
+#'
+#' system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+#'  read_contas()
 
 read_contas <- function(contas_file) {
   tidyxl::xlsx_cells(contas_file)[c("row", "col", "is_blank", "content", "data_type",
