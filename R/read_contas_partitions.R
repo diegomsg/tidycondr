@@ -21,7 +21,6 @@ read_contas_partitions <- function(contas_file, .progress = TRUE) {
     call_partition_funs(
       .code_col = code,
       .cells_col = cells,
-      .progress = .progress
-    ) |>
-    dplyr::select(-cells)
+      .progress = .progress) |>
+    subset(select = -cells)
 }

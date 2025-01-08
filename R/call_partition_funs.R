@@ -19,9 +19,17 @@ call_partition_funs <- function(
     tbl, .code_col = code, .cells_col = cells, .progress = FALSE) {
   stopifnot(".progress must be logical." = is.logical(.progress))
 
-  tbl$cells_parts <- purrr::map2(
-      .x = {{ .code_col }},
-      .y = {{ .cells_col }},
+  code_col <- substitute(.code_col)
+  cells_col <- substitute(.cells_col)
+
+  tbl$cells_parts <- with(
+    tbl,
+    purrr::map2(
+      .x = eval(code_col),
+      .y = eval(cells_col),
       .f = ~ get_partition_fun(.x)(list(.y)),
       .progress = .progress)
+  )
+
+  tbl
 }
