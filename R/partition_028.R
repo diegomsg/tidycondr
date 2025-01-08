@@ -22,15 +22,15 @@
 #' pcontas_part |>
 #'  mutate(processed = purrr::map(cells, partition_028))
 #'
-partition_028 <- function(pacord_part) {
+partition_028 <- function(tbl) {
 
-  summary <- partition_028_summary(pacord_part) |>
+  summary <- partition_028_summary(tbl) |>
     dplyr::select(info_date, date) |>
     tidyr::pivot_wider(
       names_from = info_date,
       values_from = date)
 
-  groups <- partition_028_split_groups(pacord_part) |>
+  groups <- partition_028_split_groups(tbl) |>
     dplyr::mutate(
       cobrancas_originais  = lapply(cobrancas_originais, partition_028_cobrancas),
       parcelas_do_acordo   = lapply(parcelas_do_acordo , partition_028_parcelas))
