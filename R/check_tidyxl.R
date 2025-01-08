@@ -7,12 +7,10 @@
 #' @return logical
 #'
 #' @examples
-#' pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
-#'  read_contas()
+#' pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr")
 #' check_tidyxl(pcontas)
 #'
-#' acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
-#'  read_contas()
+#' acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr")
 #' check_tidyxl(acordos)
 #'
 check_tidyxl <- function(tbl) {
@@ -33,12 +31,12 @@ check_tidyxl <- function(tbl) {
 #' @return stop or not
 #'
 #' @examples
-#' pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
-#'  read_contas()
+#' pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr")
+#' pcontas <- read_contas(pcontas)
 #' assert_tidyxl(pcontas)
 #'
-#' acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
-#'  read_contas()
+#' acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr")
+#' acordos <- read_contas(acordos)
 #' assert_tidyxl(acordos)
 #'
 assert_tidyxl <- function(tbl) {
