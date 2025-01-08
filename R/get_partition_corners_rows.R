@@ -14,7 +14,7 @@ get_partition_corners_rows <- function(tbl, filled_cols, empty_cols) {
       sapply(c(filled_cols, filled_cols), is.numeric),
       sapply(c(filled_cols, filled_cols), is.vector)))
 
-  rec_tbl <- rectify(tbl)
+  rec_tbl <- unpivotr::rectify(tbl)
 
   # include `row/col` collumn from `rectify()`
   filled_cols <- filled_cols + 1
