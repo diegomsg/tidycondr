@@ -6,7 +6,6 @@
 #'
 #' @return Tidy data.
 #'
-#'
 #' @export
 #'
 #' @examples
