@@ -22,7 +22,7 @@
 #' pcontas_part |>
 #'  mutate(processed = purrr::map(cells, partition_028))
 #'
-partition_028 <- function(tbl) {
+partition_028 <- function(pacord_part) {
 
   summary <- partition_028_summary(pacord_part) |>
     dplyr::select(info_date, date) |>
