@@ -46,7 +46,7 @@ partition_028_parcelas <- function(parc) {
         as.integer),
       across(
         starts_with("emitido") | starts_with("pago"),
-        parse_number,
+        readr::parse_number,
         locale = readr::locale(
           decimal_mark = ",",
           grouping_mark = ".")))
