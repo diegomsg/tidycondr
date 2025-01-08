@@ -68,7 +68,7 @@ partition_060_long <- function(tbl) {
       values_from = valor) |>
     janitor::clean_names() |>
     dplyr::mutate(
-      atualizacao = dmy(atualizacao),
+      atualizacao = lubridate::dmy(atualizacao),
       dplyr::across(
         -atualizacao,
         ~ readr::parse_number(
