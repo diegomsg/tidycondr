@@ -22,6 +22,8 @@ partition_028_parcelas <- function(parc) {
   assert_tidyxl(parc)
 
   parc |>
+    filter(!is_blank) |>
+    ##partition_028_parcelas
     unpivotr::rectify() |>
     select(-1) |>
     janitor::row_to_names(2, remove_rows_above = TRUE) |>
@@ -44,10 +46,13 @@ partition_028_parcelas <- function(parc) {
       across(
         c(numero, obs_id:obs_n),
         as.integer),
+      renegociado = stringi::stri_detect_regex(pago, "[a-z|A-Z]"),
       across(
         starts_with("emitido") | starts_with("pago"),
-        readr::parse_number,
-        locale = readr::locale(
-          decimal_mark = ",",
-          grouping_mark = ".")))
+        \(x) readr::parse_number(
+          x,
+          locale = readr::locale(
+            decimal_mark = ",",
+            grouping_mark = ".")) |>
+          suppressWarnings()))
 }
