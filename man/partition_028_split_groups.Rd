@@ -17,7 +17,7 @@ Split groups Cobrancas Renegociadas / Parcelas Definidas partition of
 financial report (cobrancas_originais e parcelas_do_acordo ).
 }
 \examples{
-acord <- read_contas("data_raw/acordos.xlsx")
+acord <- read_contas("extdata/acordos.xlsx")
 pacord_part <- partition_contas(acord)
 pacord_part <- pacord_part[grepl("028", pacord_part$code),]
 

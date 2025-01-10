@@ -19,5 +19,5 @@ Read \link{tidyxl} data from \code{xlsx}file and retrieve all partitions using
 partition_*() for each report code.
 }
 \examples{
-read_contas_partitions("data_raw/pcontas.xlsx", .progress = TRUE)
+read_contas_partitions("extdata/pcontas.xlsx", .progress = TRUE)
 }

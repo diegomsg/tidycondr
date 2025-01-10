@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples
-#' read_contas_partitions("data_raw/pcontas.xlsx", .progress = TRUE)
+#' read_contas_partitions("extdata/pcontas.xlsx", .progress = TRUE)
 
 read_contas_partitions <- function(contas_file, .progress = TRUE) {
   contas_file |>

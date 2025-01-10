@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' acord <- read_contas("data_raw/acordos.xlsx")
+#' acord <- read_contas("extdata/acordos.xlsx")
 #' pacord <- partition_contas(acord)
 #' pacord <- pacord[grepl("028", pacord$code),]
 #' pacord_part <- pacord$cells[1][[1]]

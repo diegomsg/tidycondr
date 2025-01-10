@@ -17,7 +17,7 @@ pcontas_anonym <- pcontas_anonym[-1]
 # write
 writexl::write_xlsx(
   pcontas_anonym,
-  path = "data_raw/pcontas.xlsx",
+  path = "extdata/pcontas.xlsx",
   col_names = FALSE,
   format_headers = FALSE)
 

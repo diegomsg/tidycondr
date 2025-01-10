@@ -38,12 +38,12 @@ library(tidycondr)
 ``` r
 ## pcontas
 # read pcontas file
-system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
   read_contas()
 
 ## acordos
 # read acordos file
-system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+system.file("extdata/acordos.xlsx", package = "tidycondr") |>
   read_contas()
 ```
 
@@ -52,13 +52,13 @@ system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
 ``` r
 ## pcontas
 # partition pcontas
-pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
   read_contas()
 partition_contas(pcontas)
 
 ## acordos
 # partition acordos
-acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+acordos <- system.file("extdata/acordos.xlsx", package = "tidycondr") |>
   read_contas()
 ```
 
@@ -67,7 +67,7 @@ acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
 ``` r
 ## pcontas
 # partition all pcontas
-system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
   read_contas_partitions()
 ```
 
@@ -76,7 +76,7 @@ system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
 Anonymize character contents, keeping values and selected rows (normaly headers) as is.
 
 ```r
-system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
   tidyxl::xlsx_cells() |>
   anonymise(
     skip_rows = c(

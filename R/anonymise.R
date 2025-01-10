@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+#' system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
 #' tidyxl::xlsx_cells() |>
 #'  anonymise(
 #'    skip_rows = c(

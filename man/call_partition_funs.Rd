@@ -27,7 +27,7 @@ paritioned cells
 Call Partition Functions
 }
 \examples{
-parts <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+parts <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
  read_contas() |>
  partition_contas()
 

@@ -17,11 +17,11 @@ If it`s not a simple \code{\link[tidyxl:xlsx_cells]{tidyxl::xlsx_cells()}} with 
 stop execution.
 }
 \examples{
-pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr")
+pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr")
 pcontas <- read_contas(pcontas)
 assert_tidyxl(pcontas)
 
-acordos <- system.file("data_raw/acordos.xlsx", package = "tidycondr")
+acordos <- system.file("extdata/acordos.xlsx", package = "tidycondr")
 acordos <- read_contas(acordos)
 assert_tidyxl(acordos)
 

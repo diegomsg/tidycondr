@@ -17,7 +17,7 @@ acordos_anonym <- acordos_anonym[-1]
 # write
 writexl::write_xlsx(
   acordos_anonym,
-  path = "data_raw/acordos.xlsx",
+  path = "extdata/acordos.xlsx",
   col_names = FALSE,
   format_headers = FALSE)
 

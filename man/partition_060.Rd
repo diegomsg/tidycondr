@@ -16,7 +16,7 @@ Tidy nested data.
 Process financial summary (Demonstrativo de inadimplência, por unidade e anual).
 }
 \examples{
-pcontas <- system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
  read_contas()
 pcontas_part <- partition_contas(pcontas)
 pcontas_part <- pcontas_part[grepl("060", pcontas_part$code),]

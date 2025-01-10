@@ -32,10 +32,10 @@ logical, numeric, date, character, blank.
 }
 }
 \examples{
-system.file("data_raw/pcontas.xlsx", package = "tidycondr") |>
+system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
  read_contas()
 
-system.file("data_raw/acordos.xlsx", package = "tidycondr") |>
+system.file("extdata/acordos.xlsx", package = "tidycondr") |>
  read_contas()
 }
 \seealso{
