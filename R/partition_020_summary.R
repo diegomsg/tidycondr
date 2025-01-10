@@ -32,7 +32,7 @@ partition_020_summary <- function(tbl) {
     filter(
       row %in% summary_rows) |>
     unpivotr::rectify() |>
-    na.omit() |>
+    stats::na.omit() |>
     select(2:3) |>
     purrr::set_names(c("info_txt", "valor")) |>
     mutate(

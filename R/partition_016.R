@@ -16,7 +16,7 @@
 #' partition_016(pcontas_part[1,4][[1]][[1]])
 #'
 #' pcontas_part |>
-#'  mutate(processed = purrr::map(cells, partition_016))
+#'  dplyr::mutate(processed = purrr::map(cells, partition_016))
 #'
 partition_016 <- function(tbl) {
   assert_tidyxl(tbl)

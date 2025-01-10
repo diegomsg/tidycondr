@@ -6,6 +6,8 @@
 #'
 #' @return logical
 #'
+#' @export
+#'
 #' @examples
 #' pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr")
 #' check_tidyxl(pcontas)
@@ -29,6 +31,8 @@ check_tidyxl <- function(tbl) {
 #' @param tbl tibble
 #'
 #' @return stop or not
+#'
+#' @export
 #'
 #' @examples
 #' pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr")

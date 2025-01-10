@@ -7,6 +7,8 @@
 #'
 #' @return Tidy data.
 #'
+#' @export
+#'
 #' @examples
 #' pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
 #'  read_contas()

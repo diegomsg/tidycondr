@@ -53,7 +53,7 @@ partition_060_long <- function(tbl) {
     as.Date()
 
   params_txt <- tbl$character |>
-    na.omit() |>
+    stats::na.omit() |>
     tail(4) |>
     tibble::as_tibble_col("txt") |>
     tidyr::separate_wider_delim(

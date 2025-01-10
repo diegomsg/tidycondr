@@ -93,10 +93,10 @@ is_numeric_like(x = c(NA, NA, NA))
 
 # Using custom language parameters:
 is_numeric_like("1,5")
-is_numeric_like("1,5", decimal.mark = ",")
-is_numeric_like("1.500.000,00", big.mark = ".", decimal.mark = ",")
-is_numeric_like("-1.500.000,00", big.mark = ".", decimal.mark = ",")
-is_numeric_like("1.000", big.mark = ",")
+is_numeric_like("1,5", decimal_mark = ",")
+is_numeric_like("1.500.000,00", big_mark = ".", decimal_mark = ",")
+is_numeric_like("-1.500.000,00", big_mark = ".", decimal_mark = ",")
+is_numeric_like("1.000", big_mark = ",")
 is_numeric_like("R$ 1.500.000,00", big_mark = ".", decimal_mark = ",",
  currency_marks = "R$")
 is_numeric_like("R$ 1.500.000,00", big_mark = ".", decimal_mark = ",",

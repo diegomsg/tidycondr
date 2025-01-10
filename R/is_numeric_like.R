@@ -78,10 +78,10 @@
 #'
 #' # Using custom language parameters:
 #' is_numeric_like("1,5")
-#' is_numeric_like("1,5", decimal.mark = ",")
-#' is_numeric_like("1.500.000,00", big.mark = ".", decimal.mark = ",")
-#' is_numeric_like("-1.500.000,00", big.mark = ".", decimal.mark = ",")
-#' is_numeric_like("1.000", big.mark = ",")
+#' is_numeric_like("1,5", decimal_mark = ",")
+#' is_numeric_like("1.500.000,00", big_mark = ".", decimal_mark = ",")
+#' is_numeric_like("-1.500.000,00", big_mark = ".", decimal_mark = ",")
+#' is_numeric_like("1.000", big_mark = ",")
 #' is_numeric_like("R$ 1.500.000,00", big_mark = ".", decimal_mark = ",",
 #'  currency_marks = "R$")
 #' is_numeric_like("R$ 1.500.000,00", big_mark = ".", decimal_mark = ",",
@@ -95,7 +95,7 @@ is_numeric_like <- function(x, big_mark = "",
   if (big_mark == decimal_mark) {
     stop("Marks can`t be the same.")
   }
-  if (!is.na(x)) {
+  if (!all(is.na(x))) {
     if (!missing(currency_marks)) {
       x <- gsub(currency_marks, "", x, fixed = TRUE)
       x <- gsub("\\s+", "", x)
