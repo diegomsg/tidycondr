@@ -34,7 +34,7 @@ partition_028 <- function(tbl) {
     dplyr::mutate(
       cobrancas_originais  = lapply(cobrancas_originais, partition_028_cobrancas),
       parcelas_do_acordo   = lapply(parcelas_do_acordo , partition_028_parcelas),
-      renegociado          = lapply(parcelas_do_acordo, \(x) any(x$renegociado)))
+      renegociado          = sapply(parcelas_do_acordo, \(x) any(x$renegociado)))
 
   cbind(summary, groups)
 }
