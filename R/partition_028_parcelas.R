@@ -54,5 +54,6 @@ partition_028_parcelas <- function(parc) {
           locale = readr::locale(
             decimal_mark = ",",
             grouping_mark = ".")) |>
-          suppressWarnings()))
+          suppressWarnings())) |>
+    filter(!is.na(numero))
 }
