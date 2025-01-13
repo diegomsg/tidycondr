@@ -12,15 +12,13 @@
 #' @export
 #'
 #' @examples
-#' pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
-#'  read_contas()
-#' pcontas_part <- partition_contas(pcontas)
-#' pcontas_part <- pcontas_part[grepl("028", pcontas_part$code),]
-#'
-#' partition_028(pcontas_part[1,4][[1]][[1]])
-#'
-#' pcontas_part |>
-#'  mutate(processed = purrr::map(cells, partition_028))
+#' acordos <- system.file("extdata/acordos.xlsx", package = "tidycondr") |>
+#'   read_contas()
+#' acordos_part <- partition_contas(acordos)
+#' acordos_part <- acordos_part[grepl("028", acordos_part$code),]
+#' partition_028(acordos_part[1,4][[1]][[1]])
+#' acordos_part |>
+#'   mutate(processed = purrr::map(cells, partition_028))
 #'
 partition_028 <- function(tbl) {
 
