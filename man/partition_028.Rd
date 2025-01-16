@@ -27,6 +27,6 @@ acordos_part <- partition_contas(acordos)
 acordos_part <- acordos_part[grepl("028", acordos_part$code),]
 partition_028(acordos_part[1,4][[1]][[1]])
 acordos_part |>
-  mutate(processed = purrr::map(cells, partition_028))
+  dplyr::mutate(processed = purrr::map(cells, partition_028))
 
 }

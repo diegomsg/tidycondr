@@ -16,8 +16,9 @@ Tidy data.
 Process cobrancas_originais partition of financial report.
 }
 \examples{
-acord <- read_contas("extdata/acordos.xlsx")
-pacord <- partition_contas(acord)
+acordos <- system.file("extdata/acordos.xlsx", package = "tidycondr") |>
+  read_contas()
+pacord <- partition_contas(acordos)
 pacord <- pacord[grepl("028", pacord$code),]
 pacord_part <- pacord$cells[1][[1]]
 tbl <- partition_028_split_groups(pacord_part)

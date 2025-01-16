@@ -8,17 +8,6 @@
 #'
 #' @return Tidy data.
 #'
-#' @examples
-#' pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
-#'  read_contas()
-#' pcontas_part <- partition_contas(pcontas)
-#' pcontas_part <- pcontas_part[grepl("020", pcontas_part$code),]
-#'
-#' tbl_groups <- partition_020_groups(pcontas_part$cells[[1]])
-#'
-#' partition_020_despesas(
-#'  tbl_groups[tbl_groups$info == "Despesas",]$data[[1]])
-#'
 partition_020_despesas <- function(tbl) {
   assert_tidyxl(tbl)
 
@@ -94,7 +83,7 @@ partition_020_despesas <- function(tbl) {
     dplyr::mutate(
       dplyr::across(c(prop, valor),
              ~ gsub("\\(", "-", .x) |>
-               parse_number(
+               readr::parse_number(
                  locale = readr::locale(
                    decimal_mark = ",",
                    grouping_mark = "."))),

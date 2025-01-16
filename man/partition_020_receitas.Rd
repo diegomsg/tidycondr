@@ -17,15 +17,3 @@ Process receitas partition of financial report
 (Demonstrativo de receitas e despesas analítico |>
 receitas).
 }
-\examples{
-pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
- read_contas()
-pcontas_part <- partition_contas(pcontas)
-pcontas_part <- pcontas_part[grepl("020", pcontas_part$code),]
-
-tbl_groups <- partition_020_groups(tbl)
-
-partition_020_receitas(
- tbl_groups[tbl_groups$info == "Receitas",]$data[[1]])
-
-}

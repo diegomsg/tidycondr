@@ -25,6 +25,6 @@ pcontas_part <- pcontas_part[grepl("020", pcontas_part$code),]
 partition_020_summary(pcontas_part[1,4][[1]][[1]])
 
 pcontas_part |>
- mutate(processed = purrr::map(cells, partition_020_summary))
+ dplyr::mutate(processed = purrr::map(cells, partition_020_summary))
 
 }

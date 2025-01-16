@@ -22,7 +22,7 @@ vec_to_tibl <- function(vec, names_from_tbl) {
 head_rows_base <- function(head_values, tbl_to_extract_rows) {
   head_values |>
     lapply(vec_to_tibl, tbl_to_extract_rows) |>
-    bind_rows() |>
+    dplyr::bind_rows() |>
     dplyr::inner_join(tbl_to_extract_rows) |>
     dplyr::pull(dplyr::last_col())
 }

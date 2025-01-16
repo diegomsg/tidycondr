@@ -18,7 +18,7 @@
 #' acordos_part <- acordos_part[grepl("028", acordos_part$code),]
 #' partition_028(acordos_part[1,4][[1]][[1]])
 #' acordos_part |>
-#'   mutate(processed = purrr::map(cells, partition_028))
+#'   dplyr::mutate(processed = purrr::map(cells, partition_028))
 #'
 partition_028 <- function(tbl) {
 
@@ -34,5 +34,5 @@ partition_028 <- function(tbl) {
       parcelas_do_acordo   = lapply(parcelas_do_acordo , partition_028_parcelas),
       renegociado          = sapply(parcelas_do_acordo, \(x) any(x$renegociado)))
 
-  cbind(summary, groups)
+  dplyr::bind_cols(summary, groups)
 }

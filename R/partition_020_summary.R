@@ -8,6 +8,7 @@
 #' @return Tidy data.
 #'
 #' @import dplyr
+#' @export
 #'
 #' @examples
 #' pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
@@ -18,7 +19,7 @@
 #' partition_020_summary(pcontas_part[1,4][[1]][[1]])
 #'
 #' pcontas_part |>
-#'  mutate(processed = purrr::map(cells, partition_020_summary))
+#'  dplyr::mutate(processed = purrr::map(cells, partition_020_summary))
 #'
 partition_020_summary <- function(tbl) {
   assert_tidyxl(tbl)

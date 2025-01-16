@@ -22,9 +22,6 @@ pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
 pcontas_part <- partition_contas(pcontas)
 pcontas_part <- pcontas_part[grepl("020", pcontas_part$code),]
 
-partition_020_summary(pcontas_part[1,4][[1]][[1]])
-
-pcontas_part |>
- mutate(processed = purrr::map(cells, partition_020_groups))
+partition_020_groups(pcontas_part$cells[[1]])
 
 }

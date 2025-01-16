@@ -37,11 +37,11 @@ partition_020 <- function(tbl) {
       dplyr::mutate(code = glue::glue("020_{info}")) |>
       call_partition_funs(
         .cells_col = data) |>
-      cbind(
+      dplyr::bind_cols(
         "chapter" = c("Relatório analítico")) |>
       dplyr::select(chapter, info, data)
   }
 
-  rbind(resumo, analitico) |>
+  bind_rows(resumo, analitico) |>
     dplyr::relocate(data, .after = dplyr::last_col())
 }
