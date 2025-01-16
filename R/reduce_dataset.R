@@ -2,9 +2,11 @@
 #'
 #' @description
 #' Bind rows from tibbles in dataset. It reduces from multiple rows in dataset,
-#'  one row for each file
+#'  to one row for each file. If unnest is true, list collumns will be unnested.
 #'
-#' @param dataset tibble dataset from [read_contas_partitions()].
+#' @param dataset tibble dataset from [read_contas_partitions()] over multiple
+#'  files.
+#' @param unnest unnest one level list columns.
 #'
 #' @return tibble
 #'
@@ -14,8 +16,15 @@
 #' read_acordos_partitions("extdata/acordos.xlsx", .progress = TRUE) |>
 #'   reduce_dataset()
 #'
-reduce_dataset <- function(dataset) {
-  Reduce(rbind, dataset, simplify = TRUE)
+reduce_dataset <- function(dataset, unnest = FALSE) {
+  bind_tbl <- Reduce(rbind, dataset, simplify = TRUE)
+
+  if (unnest) {
+    list_cols <- which(sapply(bind_tbl, is.list))
+    bind_tbl <- tidyr::unnest(bind_tbl, cols = names(list_cols))
+  }
+
+  bind_tbl
 }
 
 #' Reduce acordos datasets tibble to one row per report

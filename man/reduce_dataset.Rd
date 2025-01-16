@@ -4,17 +4,20 @@
 \alias{reduce_dataset}
 \title{Reduce datasets tibble to one row per report}
 \usage{
-reduce_dataset(dataset)
+reduce_dataset(dataset, unnest = FALSE)
 }
 \arguments{
-\item{dataset}{tibble dataset from \code{\link[=read_contas_partitions]{read_contas_partitions()}}.}
+\item{dataset}{tibble dataset from \code{\link[=read_contas_partitions]{read_contas_partitions()}} over multiple
+files.}
+
+\item{unnest}{unnest one level list columns.}
 }
 \value{
 tibble
 }
 \description{
 Bind rows from tibbles in dataset. It reduces from multiple rows in dataset,
-one row for each file
+to one row for each file. If unnest is true, list collumns will be unnested.
 }
 \examples{
 read_acordos_partitions("extdata/acordos.xlsx", .progress = TRUE) |>
