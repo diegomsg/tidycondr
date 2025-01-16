@@ -23,7 +23,7 @@ pcontas <- system.file("extdata/pcontas.xlsx", package = "tidycondr") |>
 pcontas_part <- partition_contas(pcontas)
 pcontas_part <- pcontas_part[grepl("020", pcontas_part$code),]
 
-tbl_groups <- partition_020_groups(tbl)
+tbl_groups <- partition_020_groups(pcontas_part$cells[[1]])
 
 partition_020_despesas(
  tbl_groups[tbl_groups$info == "Despesas",]$data[[1]])
