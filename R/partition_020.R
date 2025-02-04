@@ -39,7 +39,7 @@ partition_020 <- function(tbl) {
         .cells_col = data) |>
       dplyr::bind_cols(
         "chapter" = c("Relatório analítico")) |>
-      dplyr::select(chapter, info, data)
+      dplyr::select(chapter, info, data = cells_parts)
   }
 
   bind_rows(resumo, analitico) |>
