@@ -52,10 +52,7 @@ partition_020_despesas <- function(tbl) {
         get_group_row)) |>
     dplyr::ungroup() |>
     tidyr::fill(grupo, subgrupo, .direction = "down") |>
-    dplyr::filter(
-      first_lvl_partition != second_lvl_partition,
-      !is.na(first_lvl_partition),
-      !is.na(second_lvl_partition)) |>
+    dplyr::filter(purrr::map_vec(data, nrow) > 6) |>
     dplyr::mutate(
       data = purrr::map2(
         data, second_lvl_partition,
