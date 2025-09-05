@@ -49,7 +49,7 @@ partition_065 <- function(tbl) {
         "[[:alpha:]|0-9]*/[0-9]{2,4}")) |>
       as.Date("%d/%b/%Y"),
     compet = lubridate::my(compet),
-    dplyr::across(c(total_qtd, codigo, pago:creditado), ~ readr::parse_number(
+    dplyr::across(c(total_qtd, codigo, atraso_d:creditado), ~ readr::parse_number(
       gsub("^\\(", "-", .x),
       locale = readr::locale(
         decimal_mark = ",",
